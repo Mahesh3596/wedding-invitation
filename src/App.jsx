@@ -55,7 +55,6 @@ export default function App() {
     <>
       {!opened && (
         <Envelope
-          initials={wedding.initials}
           names={`${wedding.bride.name} & ${wedding.groom.name}`}
           onStart={() => wedding.music && toggleMusic()}
           onDone={() => setOpened(true)}
@@ -72,7 +71,7 @@ export default function App() {
         <Story />
         <Gallery />
         <Info />
-        <Rsvp />
+        {/* <Rsvp /> */}
       </main>
       <Footer />
 

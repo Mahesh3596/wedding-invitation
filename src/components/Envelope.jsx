@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function Envelope({ initials, names, onStart, onDone }) {
+export default function Envelope({ names, onStart, onDone }) {
   const [opening, setOpening] = useState(false);
   const timer = useRef(null);
 
@@ -10,31 +10,19 @@ export default function Envelope({ initials, names, onStart, onDone }) {
     if (opening) return;
     setOpening(true);
     onStart?.();
-    timer.current = setTimeout(onDone, 2700);
+    timer.current = setTimeout(onDone, 1350);
   };
 
   return (
-    <div className={`envelope-overlay ${opening ? 'is-opening' : ''}`}>
-      <div className="envelope-stage">
-        <p className="env-kicker">You are cordially invited</p>
-        <div
-          className="envelope"
-          role="button"
-          tabIndex={0}
-          aria-label="Open the invitation"
-          onClick={open}
-          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && open()}
-        >
-          <div className="env-back" />
-          <div className="env-letter">
-            <small>The Wedding of</small>
-            <span className="script">{names}</span>
-          </div>
-          <div className="env-pocket" />
-          <div className="env-flap" />
-          <div className="env-seal">{initials}</div>
-        </div>
-        <p className="env-hint">Tap the seal to open</p>
+    <div className={`curtain-overlay ${opening ? 'is-opening' : ''}`}>
+      <div className="curtain-panel curtain-panel-left" aria-hidden="true" />
+      <div className="curtain-panel curtain-panel-right" aria-hidden="true" />
+      <div className="curtain-stage">
+        <p className="curtain-kicker">You are cordially invited</p>
+        <p className="curtain-title script">{names}</p>
+        <button className="curtain-open" type="button" onClick={open} disabled={opening}>
+          Open invitation
+        </button>
       </div>
     </div>
   );
