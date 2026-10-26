@@ -13,10 +13,11 @@ const makePetals = (n) =>
 
 export default function Hero() {
   const [petals] = useState(() => makePetals(22));
+  const heroImage = new URL(wedding.heroImage, document.baseURI).href;
 
   return (
     <section id="home" className="hero">
-      <div className="hero-bg" style={{ '--hero-image': `url(${wedding.heroImage})` }} />
+      <div className="hero-bg" style={{ '--hero-image': `url("${heroImage}")` }} />
       <div className="hero-overlay" />
       <div className="petals" aria-hidden="true">
         {petals.map((p) => (
