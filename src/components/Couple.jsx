@@ -3,7 +3,7 @@ import SectionTitle from './SectionTitle';
 
 function Person({ person, role, side }) {
   return (
-    <article className={`person reveal from-${side}`}>
+    <article className={`person person-${side} reveal from-${side}`}>
       <div className="person-frame">
         <img src={person.photo} alt={person.fullName} loading="lazy" />
       </div>

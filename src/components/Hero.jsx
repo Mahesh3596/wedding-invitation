@@ -16,7 +16,7 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero">
-      <div className="hero-bg" style={{ backgroundImage: `url(${wedding.heroImage})` }} />
+      <div className="hero-bg" style={{ '--hero-image': `url(${wedding.heroImage})` }} />
       <div className="hero-overlay" />
       <div className="petals" aria-hidden="true">
         {petals.map((p) => (

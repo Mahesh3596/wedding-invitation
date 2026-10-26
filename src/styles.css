@@ -416,16 +416,47 @@ a {
 .hero-bg {
   position: absolute;
   inset: -2%;
+  overflow: hidden;
+  background: var(--maroon-dark);
+}
+
+.hero-bg::before,
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--hero-image);
+  background-repeat: no-repeat;
+}
+
+.hero-bg::before {
   background-size: cover;
   background-position: center;
+  filter: blur(14px) brightness(0.75);
+  transform: scale(1.06);
+}
+
+.hero-bg::after {
+  background-size: auto 135%;
+  background-position: center 8%;
+  transform-origin: center top;
+  --kenburns-end: 1.08;
   animation: kenburns 24s ease-in-out infinite alternate;
+}
+
+@media (max-width: 800px) {
+  .hero-bg::after {
+    background-size: auto 112%;
+    background-position: center top;
+    --kenburns-end: 1.03;
+  }
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(74, 20, 32, 0.45), rgba(40, 10, 18, 0.82)),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(74, 20, 32, 0.55));
+  background: radial-gradient(ellipse at center, rgba(74, 20, 32, 0.35), rgba(40, 10, 18, 0.65)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(74, 20, 32, 0.42));
 }
 
 .hero-content {
@@ -529,7 +560,7 @@ a {
     transform: scale(1);
   }
   to {
-    transform: scale(1.12) translate(-1%, -1%);
+    transform: scale(var(--kenburns-end, 1.08));
   }
 }
 
@@ -714,8 +745,26 @@ a {
   transition: transform 0.6s var(--ease);
 }
 
+.person-left .person-frame img {
+  object-position: center 10%;
+}
+
+.person-right .person-frame {
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.person-right .person-frame img {
+  object-position: center 40%;
+  transform: scale(1.45);
+}
+
 .person:hover .person-frame img {
   transform: scale(1.04);
+}
+
+.person-right:hover .person-frame img {
+  transform: scale(1.52);
 }
 
 .person h3 {

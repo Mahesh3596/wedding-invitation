@@ -10,7 +10,7 @@ const links = [
   ['story', 'Story'],
   ['gallery', 'Gallery'],
   ['info', 'Info'],
-  ['rsvp', 'RSVP'],
+  // ['rsvp', 'RSVP'],
 ];
 
 export default function Navbar() {

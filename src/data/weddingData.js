@@ -34,8 +34,8 @@ export const wedding = {
       id: 'engagement',
       title: 'Engagement Ceremony',
       subtitle: 'The Ring Exchange',
-      start: '2026-12-26T16:30:00+05:30',
-      end: '2026-12-26T20:30:00+05:30',
+      start: '2026-12-26T16:00:00+05:30',
+      end: '2026-12-26T20:00:00+05:30',
       description: 'An evening of rings, rhythm and blessings, followed by dinner.',
       dressCode: 'Indo-Western · Pastels',
       venue: {
@@ -48,7 +48,7 @@ export const wedding = {
       id: 'wedding',
       title: 'Wedding Ceremony',
       subtitle: 'The Sacred Vows',
-      start: '2027-01-09T10:00:00+05:30',
+      start: '2027-01-09T11:00:00+05:30',
       end: '2027-01-09T14:00:00+05:30',
       description: 'Join us as we take the seven sacred steps, followed by a traditional lunch.',
       dressCode: 'Traditional · Reds & Golds',
@@ -80,7 +80,7 @@ export const wedding = {
   // ],
 
   gallery: [
-    { src: './images/gallery-01.jpg', alt: 'Candid 01' },
+    { src: './images/gallery-01.jpg', alt: 'Couple portrait' },
     { src: './images/gallery-02.jpg', alt: 'Candid 02' },
     { src: './images/gallery-03.jpg', alt: 'Candid 03' },
     { src: './images/gallery-04.jpg', alt: 'Candid 04' },
@@ -95,7 +95,7 @@ export const wedding = {
     { icon: 'hotel', title: 'Where to Stay', text: 'Rooms are reserved for guests in a nearby hotel. it is nearby engagement venue.' },
     // { icon: 'plane', title: 'Getting There by Plane', text: 'Nearest airport: Trivandrum International Airport (TRV), ~45 minutes from the wedding venue.' },
     { icon: 'dress', title: 'Dress Code', text: 'Engagement: Indo-Western in pastels. Wedding: Traditional attire in reds, golds and jewel tones.' },
-    { icon: 'sun', title: 'Weather', text: 'Expect pleasant days around 24–30°C. Carry a light shawl for the evening breeze.' },
+    { icon: 'plane', title: 'Getting There by Plane', text: 'Nearest airport: Trivandrum International Airport (TRV), ~45 minutes from the wedding venue.' },
   ],
 
   faqs: [
@@ -112,6 +112,7 @@ export const wedding = {
 
   contacts: [
     { name: 'Febin (Bride’s Brother)', phone: '+91 88486 17383' },
+    { name: 'Feba (Bride’s Sister)', phone: '+91 73561 30906' },
     { name: 'Sneha (Groom’s Sister)', phone: '+91 81369 25432' },
   ],
 };
