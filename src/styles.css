@@ -399,6 +399,12 @@ a {
   .menu-open {
     color: var(--maroon);
   }
+
+  /* backdrop-filter would make the header the containing block of the fixed menu */
+  .navbar.is-scrolled.menu-open {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 /* ---------- Hero ---------- */
@@ -1538,6 +1544,7 @@ a {
 }
 
 .field .choice {
+  position: relative;
   flex: 1 1 160px;
   display: flex;
   align-items: center;
@@ -1557,6 +1564,10 @@ a {
 
 .choice input {
   position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
   opacity: 0;
   pointer-events: none;
 }

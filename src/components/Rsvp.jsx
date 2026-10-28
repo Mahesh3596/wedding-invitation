@@ -79,7 +79,7 @@ export default function Rsvp() {
         });
       } catch {
         setSending(false);
-        setErrors({ form: 'Could not send your RSVP. Please check your connection and try again.' });
+        setErrors({ form: 'Could not send your response. Please check your connection and try again.' });
         return;
       }
       setSending(false);
@@ -177,7 +177,7 @@ export default function Rsvp() {
             </div>
 
             <button type="submit" className="btn btn-gold btn-block" disabled={sending}>
-              {sending ? 'Sending...' : 'Send RSVP'}
+              {sending ? 'Sending...' : 'Confirm My Response'}
             </button>
             {errors.form && <span className="error">{errors.form}</span>}
           </form>
