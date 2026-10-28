@@ -30,6 +30,7 @@ export default function Rsvp() {
   const [form, setForm] = useState(() => saved ?? emptyForm);
   const [errors, setErrors] = useState({});
   const [declineOpen, setDeclineOpen] = useState(false);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     if (!declineOpen) return;
@@ -51,20 +52,39 @@ export default function Rsvp() {
   const validate = () => {
     const errs = {};
     if (form.name.trim().length < 2) errs.name = 'Please enter your name';
-    if (!form.phone.trim()) errs.phone = 'Please enter your phone number';
-    else if (!isValidPhone(form.phone)) errs.phone = 'Enter a valid India, US, UK or Canada number';
+    if (form.phone.trim() && !isValidPhone(form.phone)) errs.phone = 'Enter a valid India, US, UK or Canada number';
     if (form.attending === 'yes' && form.events.length === 0) errs.events = 'Please choose at least one event';
     const guests = Number(form.guests);
     if (form.attending === 'yes' && (!Number.isInteger(guests) || guests < 1 || guests > 10)) errs.guests = 'Guests must be between 1 and 10';
     return errs;
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
     if (Object.keys(errs).length) return;
     const data = { ...form, name: form.name.trim(), message: form.message.trim(), submittedAt: new Date().toISOString() };
+
+    if (wedding.rsvp.sheetUrl) {
+      setSending(true);
+      try {
+        const eventNames = wedding.events.filter((ev) => data.events.includes(ev.id)).map((ev) => ev.title).join(', ');
+        // text/plain avoids a CORS preflight, which Apps Script web apps do not answer
+        await fetch(wedding.rsvp.sheetUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ ...data, events: data.attending === 'yes' ? eventNames : '' }),
+        });
+      } catch {
+        setSending(false);
+        setErrors({ form: 'Could not send your RSVP. Please check your connection and try again.' });
+        return;
+      }
+      setSending(false);
+    }
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     setSaved(data);
   };
@@ -109,7 +129,7 @@ export default function Rsvp() {
               {errors.name && <span className="error">{errors.name}</span>}
             </div>
             <div className="field">
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="phone">Phone (optional)</label>
               <input id="phone" type="tel" maxLength={24} value={form.phone} onChange={update('phone')} placeholder="India, US, UK or Canada, e.g. +91 98765 43210" />
               {errors.phone && <span className="error">{errors.phone}</span>}
             </div>
@@ -156,7 +176,10 @@ export default function Rsvp() {
               <textarea id="message" rows={3} maxLength={300} value={form.message} onChange={update('message')} placeholder="Leave a little love note..." />
             </div>
 
-            <button type="submit" className="btn btn-gold btn-block">Send RSVP</button>
+            <button type="submit" className="btn btn-gold btn-block" disabled={sending}>
+              {sending ? 'Sending...' : 'Send RSVP'}
+            </button>
+            {errors.form && <span className="error">{errors.form}</span>}
           </form>
         )}
       </div>
