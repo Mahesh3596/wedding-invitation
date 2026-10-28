@@ -61,11 +61,31 @@ export const wedding = {
   ],
 
   story: [
-    { year: '2021', title: 'First Hello', text: 'We met at church youth committee kalolsavam (Utsav\'21) and both of us got struck by the cupid\'s arrow.' },
-    { year: '2022', title: 'Bye Bye India', text: 'After a six months of meeting and growing closer, she bid farewell to India for new adventures abroad.' },
-    { year: '2024', title: 'Just a peek meetup', text: 'All of a sudden, we found ourselves together for a brief but memorable meetup.' },
-    { year: '2025', title: 'The Family Confession', text: 'After much anticipation, we shared our love story with our families and received their heartfelt blessings.' },
-    { year: '2026', title: 'The Wedding', text: 'After whole 5 years of love, distance, and cherished memories, we finally going to unite and tie the knot in a grand celebration.' }
+    {
+      year: '2021',
+      title: 'Where Our Forever Began',
+      text: 'At Utsav ’21, a church youth committee kalolsavam, two hearts crossed paths. What began with a simple hello soon became something neither of us could explain — as if Cupid had quietly written the first page of our forever.'
+    },
+    {
+      year: '2022',
+      title: 'Miles Apart, Hearts Together',
+      text: 'Just six months after our worlds intertwined, she left India to chase new dreams in a distant land. Saying goodbye was never easy, but our hearts had already chosen each other. And so began a love story that distance could stretch, but never break.'
+    },
+    {
+      year: '2024',
+      title: 'A Little Time, A Lifetime of Memories',
+      text: 'After years of longing and counting moments, destiny gave us another beautiful chance to meet. It was only a brief glimpse of togetherness, but sometimes a few precious moments are enough to remind two hearts why they waited so long.'
+    },
+    {
+      year: '2025',
+      title: 'When Our Love Found Its Blessings',
+      text: 'What had lived quietly in our hearts finally found its way into the hearts of our families. With nervous smiles, hopeful prayers, and overwhelming happiness, we shared our love story and received their blessings — turning our little dream into a beautiful promise of forever.'
+    },
+    {
+      year: '2026',
+      title: 'From Two Hearts to One Forever',
+      text: 'Five years of stolen moments, heartfelt prayers, distant goodbyes, and endless hope have led us here. Soon, the distance will become a memory, the waiting will become a celebration, and two hearts that chose each other long ago will finally promise to walk together for a lifetime. Our forever begins now.'
+    }
   ],
 
   // gallery: [
@@ -80,11 +100,11 @@ export const wedding = {
   // ],
 
   gallery: [
-    { src: './images/gallery-01.jpg', alt: 'Couple portrait' },
+    // { src: './images/gallery-01.jpg', alt: 'Couple portrait' },
     { src: './images/gallery-02.jpg', alt: 'Candid 02' },
     { src: './images/gallery-03.jpg', alt: 'Candid 03' },
     { src: './images/gallery-04.jpg', alt: 'Candid 04' },
-    { src: './images/gallery-05.jpg', alt: 'Candid 05' },
+    // { src: './images/gallery-05.jpg', alt: 'Candid 05' },
     { src: './images/gallery-06.jpg', alt: 'Candid 06' },
     { src: './images/gallery-07.jpg', alt: 'Candid 07' },
     { src: './images/gallery-08.jpg', alt: 'Candid 08' }
@@ -107,7 +127,7 @@ export const wedding = {
 
   rsvp: {
     deadline: '2027-01-10',
-    whatsappNumber: '919999999999', // country code + number, no "+" or spaces
+    whatsappNumber: '+918921694588', // country code + number, no "+" or spaces
   },
 
   contacts: [

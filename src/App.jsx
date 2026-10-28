@@ -71,7 +71,7 @@ export default function App() {
         <Story />
         <Gallery />
         <Info />
-        {/* <Rsvp /> */}
+        <Rsvp />
       </main>
       <Footer />
 

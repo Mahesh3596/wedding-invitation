@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { wedding } from '../data/weddingData';
 import { formatDate } from '../utils/helpers';
 import SectionTitle from './SectionTitle';
@@ -14,12 +14,36 @@ const loadSaved = () => {
   }
 };
 
+const PHONE_PATTERNS = [
+  /^(\+91|0091|91|0)?[6-9]\d{9}$/, // India
+  /^(\+1|001|1)?[2-9]\d{2}[2-9]\d{6}$/, // US / Canada
+  /^((\+44|0044|44)0?|0)[1-9]\d{8,9}$/, // UK
+];
+
+const isValidPhone = (value) => {
+  const digits = value.replace(/[\s\-().]/g, '');
+  return PHONE_PATTERNS.some((re) => re.test(digits));
+};
+
 export default function Rsvp() {
   const [saved, setSaved] = useState(loadSaved);
   const [form, setForm] = useState(() => saved ?? emptyForm);
   const [errors, setErrors] = useState({});
+  const [declineOpen, setDeclineOpen] = useState(false);
+
+  useEffect(() => {
+    if (!declineOpen) return;
+    const onKey = (e) => e.key === 'Escape' && setDeclineOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [declineOpen]);
 
   const update = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  const chooseEvents = (ids) => {
+    setForm((f) => ({ ...f, attending: 'yes', events: ids }));
+    setDeclineOpen(false);
+  };
 
   const toggleEvent = (id) =>
     setForm((f) => ({ ...f, events: f.events.includes(id) ? f.events.filter((x) => x !== id) : [...f.events, id] }));
@@ -27,7 +51,8 @@ export default function Rsvp() {
   const validate = () => {
     const errs = {};
     if (form.name.trim().length < 2) errs.name = 'Please enter your name';
-    if (form.phone && !/^[+\d\s-]{7,16}$/.test(form.phone)) errs.phone = 'Please enter a valid phone number';
+    if (!form.phone.trim()) errs.phone = 'Please enter your phone number';
+    else if (!isValidPhone(form.phone)) errs.phone = 'Enter a valid India, US, UK or Canada number';
     if (form.attending === 'yes' && form.events.length === 0) errs.events = 'Please choose at least one event';
     const guests = Number(form.guests);
     if (form.attending === 'yes' && (!Number.isInteger(guests) || guests < 1 || guests > 10)) errs.guests = 'Guests must be between 1 and 10';
@@ -84,8 +109,8 @@ export default function Rsvp() {
               {errors.name && <span className="error">{errors.name}</span>}
             </div>
             <div className="field">
-              <label htmlFor="phone">Phone (optional)</label>
-              <input id="phone" type="tel" maxLength={16} value={form.phone} onChange={update('phone')} placeholder="+91 98765 43210" />
+              <label htmlFor="phone">Phone</label>
+              <input id="phone" type="tel" maxLength={24} value={form.phone} onChange={update('phone')} placeholder="India, US, UK or Canada, e.g. +91 98765 43210" />
               {errors.phone && <span className="error">{errors.phone}</span>}
             </div>
 
@@ -97,7 +122,7 @@ export default function Rsvp() {
                   ['no', 'Regretfully Decline'],
                 ].map(([val, label]) => (
                   <label key={val} className={`choice ${form.attending === val ? 'is-selected' : ''}`}>
-                    <input type="radio" name="attending" value={val} checked={form.attending === val} onChange={update('attending')} />
+                    <input type="radio" name="attending" value={val} checked={form.attending === val} onChange={val === 'no' ? () => setDeclineOpen(true) : update('attending')} />
                     {label}
                   </label>
                 ))}
@@ -135,6 +160,29 @@ export default function Rsvp() {
           </form>
         )}
       </div>
+
+      {declineOpen && (
+        <div className="modal-backdrop" onClick={() => setDeclineOpen(false)}>
+          <div className="modal pop-in" role="dialog" aria-modal="true" aria-labelledby="decline-title" onClick={(e) => e.stopPropagation()}>
+            <h3 id="decline-title" className="script">Nice try!</h3>
+            <p>
+              Skip our wedding? Bold move. You can't miss this one. If you really can't make both, at least show up for
+              the engagement or the wedding.
+            </p>
+            <div className="modal-actions">
+              {wedding.events.map((ev) => (
+                <button key={ev.id} type="button" className="btn btn-gold" onClick={() => chooseEvents([ev.id])}>
+                  I'll come to the {ev.title}
+                </button>
+              ))}
+              <button type="button" className="btn btn-outline" onClick={() => chooseEvents(wedding.events.map((ev) => ev.id))}>
+                Both, of course
+              </button>
+            </div>
+            <button type="button" className="link-btn" onClick={() => setDeclineOpen(false)}>Let me think again</button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
