@@ -126,7 +126,7 @@ export const wedding = {
   ],
 
   rsvp: {
-    deadline: '2027-01-10',
+    deadline: '2027-01-01',
     // Google Apps Script web app URL that saves RSVPs to a Google Sheet. Leave empty to keep responses on the guest's device only.
     sheetUrl: 'https://script.google.com/macros/s/AKfycbyb67TSGP4CYRwGIpld0Sq1sVrdCltlD-TubT_zHiIcTVmu7If2y7VBKeRwjFZ_2DAhFQ/exec',
     whatsappNumber: '+918921694588', // country code + number, no "+" or spaces

@@ -4,7 +4,7 @@ import { formatDate } from '../utils/helpers';
 import SectionTitle from './SectionTitle';
 
 const STORAGE_KEY = 'wedding-rsvp';
-const emptyForm = { name: '', phone: '', attending: 'yes', guests: 1, events: wedding.events.map((e) => e.id), message: '' };
+const emptyForm = { name: '', phone: '', attending: '', guests: 1, events: [], message: '' };
 
 const loadSaved = () => {
   try {
@@ -53,6 +53,7 @@ export default function Rsvp() {
     const errs = {};
     if (form.name.trim().length < 2) errs.name = 'Please enter your name';
     if (form.phone.trim() && !isValidPhone(form.phone)) errs.phone = 'Enter a valid India, US, UK or Canada number';
+    if (!form.attending) errs.attending = 'Please choose whether you will attend';
     if (form.attending === 'yes' && form.events.length === 0) errs.events = 'Please choose at least one event';
     const guests = Number(form.guests);
     if (form.attending === 'yes' && (!Number.isInteger(guests) || guests < 1 || guests > 10)) errs.guests = 'Guests must be between 1 and 10';
@@ -142,34 +143,35 @@ export default function Rsvp() {
                   ['no', 'Regretfully Decline'],
                 ].map(([val, label]) => (
                   <label key={val} className={`choice ${form.attending === val ? 'is-selected' : ''}`}>
-                    <input type="radio" name="attending" value={val} checked={form.attending === val} onChange={val === 'no' ? () => setDeclineOpen(true) : update('attending')} />
+                    <input type="radio" name="attending" value={val} checked={form.attending === val} onChange={val === 'no' ? () => setDeclineOpen(true) : () => chooseEvents(wedding.events.map((ev) => ev.id))} />
                     {label}
                   </label>
                 ))}
               </div>
+              {errors.attending && <span className="error">{errors.attending}</span>}
             </fieldset>
 
-            {form.attending === 'yes' && (
-              <div className="fade-swap">
-                <fieldset className="field">
-                  <legend>Which events?</legend>
-                  <div className="choice-row">
-                    {wedding.events.map((ev) => (
-                      <label key={ev.id} className={`choice ${form.events.includes(ev.id) ? 'is-selected' : ''}`}>
-                        <input type="checkbox" checked={form.events.includes(ev.id)} onChange={() => toggleEvent(ev.id)} />
-                        {ev.title}
-                      </label>
-                    ))}
-                  </div>
-                  {errors.events && <span className="error">{errors.events}</span>}
-                </fieldset>
+            <div className="fade-swap">
+              <fieldset className="field">
+                <legend>Which events?</legend>
+                <div className="choice-row">
+                  {wedding.events.map((ev) => (
+                    <label key={ev.id} className={`choice ${form.events.includes(ev.id) ? 'is-selected' : ''}`}>
+                      <input type="checkbox" checked={form.events.includes(ev.id)} onChange={() => toggleEvent(ev.id)} />
+                      {ev.title}
+                    </label>
+                  ))}
+                </div>
+                {errors.events && <span className="error">{errors.events}</span>}
+              </fieldset>
+              {form.attending === 'yes' && (
                 <div className="field">
                   <label htmlFor="guests">Number of Guests</label>
                   <input id="guests" type="number" min={1} max={10} value={form.guests} onChange={update('guests')} />
                   {errors.guests && <span className="error">{errors.guests}</span>}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             <div className="field">
               <label htmlFor="message">Wishes for the Couple</label>

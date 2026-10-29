@@ -5,7 +5,9 @@ export default function Footer() {
   const [copied, setCopied] = useState(false);
 
   const share = async () => {
-    const data = { title: `${wedding.bride.name} & ${wedding.groom.name}`, text: 'You are invited to our wedding!', url: window.location.href };
+    const url = new URL(window.location.href);
+    url.hash = '';
+    const data = { title: `${wedding.bride.name} & ${wedding.groom.name}`, text: 'You are invited to our wedding!', url: url.href };
     if (navigator.share) {
       navigator.share(data).catch(() => {});
       return;
