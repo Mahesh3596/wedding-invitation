@@ -27,7 +27,7 @@ export const wedding = {
   timeZone: 'Asia/Kolkata',
 
   // Optional: path to an mp3 in /public (e.g. './music/song.mp3'). Leave empty to hide the music button.
-  music: '',
+  music: './music/wedding-song.mp3',
 
   events: [
     {
