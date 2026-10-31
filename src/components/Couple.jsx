@@ -5,7 +5,9 @@ function Person({ person, role, side }) {
   return (
     <article className={`person person-${side} reveal from-${side}`}>
       <div className="person-frame">
-        <img src={person.photo} alt={person.fullName} loading="lazy" />
+        <div className="person-image-clip">
+          <img src={person.photo} alt={person.fullName} loading="lazy" />
+        </div>
       </div>
       <p className="kicker">{role}</p>
       <h3 className="script">{person.fullName}</h3>
